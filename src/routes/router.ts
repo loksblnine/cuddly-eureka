@@ -1,3 +1,7 @@
+/**
+ * router.ts
+ * */
+
 import express from "express";
 import authRouter from "./authRouter";
 import usersRouter from "./usersRouter";
