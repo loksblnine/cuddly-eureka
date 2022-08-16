@@ -4,8 +4,10 @@
 
 import express from 'express';
 import cors from 'cors';
-import {sequelize} from "./database/config/config";
 import router from "./routes/router";
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env' });
+import {sequelize} from "./database/config/config";
 
 const app: express.Express = express();
 

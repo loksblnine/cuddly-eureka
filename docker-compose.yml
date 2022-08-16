@@ -1,0 +1,21 @@
+version: "2"
+services:
+  server:
+    environment:
+      - DB_USER=postgres
+      - DB_PASSWORD=nutter01
+      - DB_HOST=localhost
+      - DB_PORT=5432
+      - DB_DATABASE=cuddlyeureka
+      - PORT=5000
+      - NODE_ENV=development
+    restart: on-failure
+    build: ./server
+    ports:
+      - "8080:8080"
+    links:
+      - db
+  db:
+    image: postgres:13.5
+    ports:
+      - '5432:5433'
