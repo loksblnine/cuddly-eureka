@@ -18,7 +18,6 @@ export const registerUser = async (request: Request, response: Response): Promis
     }
     const encryptedPassword: string = await bcrypt.hash(password, 5);
 
-    //add validations in middleware
     const newUser: User = await User.create({
       email, password: encryptedPassword, role
     });

@@ -31,12 +31,12 @@ export const validationMiddleware = (request: Request, response: Response, next:
     if (role < 1 || role > 3) {
       errors.role = "Use roles numbers. 2 for Boss, 3 for Regular user.";
     } else {
-      if (role === 1) {
+      if (role === 1 && request.body?.user?.role !== 1) {
         errors.role = "Only admin can register new admins.";
       }
     }
     if (Object.getOwnPropertyNames(errors).length === 0) {
-      next()
+      next();
     } else {
       return response.status(403).json({message: "Forbidden", ...errors});
     }

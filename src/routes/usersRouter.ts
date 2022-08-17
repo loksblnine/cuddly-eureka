@@ -4,6 +4,8 @@
 
 import express from "express";
 import {authAdminMiddleware, authBossMiddleware, authMiddleware} from "../middlewares/authMiddleware";
+import {validationMiddleware} from "../middlewares/validationMiddleware";
+import {createUser, deleteUserById, getUserById, updateUser} from "../controllers/usersController";
 
 const router = express.Router();
 router
@@ -14,18 +16,10 @@ router
 
 router
   .route("/:id")
-  .post(authAdminMiddleware, () => {
-    console.log("add user");
-  })
-  .get(authAdminMiddleware, () => {
-    console.log("get user info");
-  })
-  .put(authAdminMiddleware, () => {
-    console.log("change info");
-  })
-  .delete(authAdminMiddleware, () => {
-    console.log("delete user");
-  });
+  .post(authAdminMiddleware, validationMiddleware, createUser)
+  .get(authAdminMiddleware, getUserById)
+  .put(authAdminMiddleware, validationMiddleware, updateUser)
+  .delete(authAdminMiddleware, deleteUserById);
 
 router
   .route("/change-boss")
