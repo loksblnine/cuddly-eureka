@@ -2,8 +2,9 @@ FROM node:14.17.1
 WORKDIR /usr/src/app
 COPY package*.json ./
 
-RUN npm install
+RUN npm install\
+        && npm install typescript -g
 COPY . .
 
-EXPOSE 8080
-CMD [ "npm", "start" ]
+RUN tsc
+CMD ["node", "./build/index.js"]
