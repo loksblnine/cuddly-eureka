@@ -1,19 +1,19 @@
 import {Sequelize} from "sequelize";
 
-const db_database = String(process.env.DB_DATABASE)
-const db_password = String(process.env.DB_PASSWORD)
-const db_user = String(process.env.DB_USER)
-const db_host = String(process.env.DB_HOST)
+const dbDatabase = String(process.env.DB_DATABASE);
+const dbPassword = String(process.env.DB_PASSWORD);
+const dbUser = String(process.env.DB_USER);
+const dbHost = String(process.env.DB_HOST);
 
 const dialectOptions = process.env.NODE_ENV === "development" ? {} : {
   ssl: {
     require: true,
     rejectUnauthorized: false
   }
-}
+};
 
-export const sequelize = new Sequelize(db_database, db_user, db_password, {
-  host: db_host,
+export const sequelize = new Sequelize(dbDatabase, dbUser, dbPassword, {
+  host: dbHost,
   dialect: 'postgres',
   dialectOptions
-})
+});
