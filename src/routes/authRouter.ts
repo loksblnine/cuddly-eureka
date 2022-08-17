@@ -3,17 +3,14 @@
  * */
 
 import express from "express";
+import * as AuthController from "../controllers/authController";
 
 const router = express.Router();
 router
   .route('/register')
-  .post(() => {
-    console.log("register router");
-  })
+  .post(AuthController.registerUser);
 router
   .route("/login")
-  .post(() => {
-    console.log("post route");
-  })
+  .post(AuthController.loginUser);
 
-export default router
+export default router;
