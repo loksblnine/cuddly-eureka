@@ -8,9 +8,17 @@ import bcrypt from "bcrypt";
 
 export const createUser = async (request: Request, response: Response): Promise<void> => {
   try {
-    const user: User = await User.create(
-      request.body
-    );
+
+    const email = String(request.body.email),
+      password = String(request.body.password),
+      role = Number(request.body.role);
+
+    const encryptedPassword: string = await bcrypt.hash(password, 5);
+
+    const user: User = await User.create({
+      email, password: encryptedPassword, role
+    });
+
     response.status(201).json(
       user
     );
@@ -22,6 +30,8 @@ export const createUser = async (request: Request, response: Response): Promise<
 //rewrite
 export const getAllUsers = async (request: Request, response: Response): Promise<void> => {
   try {
+    console.log(request.body);
+    response.status(201).json({success: true})
   } catch (e) {
     response.status(500).json("Something went wrong");
   }

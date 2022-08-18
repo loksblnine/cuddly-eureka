@@ -13,9 +13,6 @@ export const registerUser = async (request: Request, response: Response): Promis
       password = String(request.body.password),
       role = Number(request.body.role);
 
-    if (!(email && password)) {
-      return response.status(400).send("Invalid credentials");
-    }
     const encryptedPassword: string = await bcrypt.hash(password, 5);
 
     const newUser: User = await User.create({
