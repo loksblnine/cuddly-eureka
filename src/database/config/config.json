@@ -1,0 +1,13 @@
+{
+  "development": {
+  },
+  "production": {
+  },
+  "docker": {
+    "username": "postgres",
+    "password": "nutter01",
+    "database": "cuddlyeureka",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
