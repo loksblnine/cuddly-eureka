@@ -4,8 +4,16 @@
 
 import express from "express";
 import {authAdminMiddleware, authBossMiddleware, authMiddleware} from "../middlewares/authMiddleware";
-import {validationMiddleware} from "../middlewares/validationMiddleware";
-import {createUser, deleteUserById, getAllUsers, getUserById, updateUser} from "../controllers/usersController";
+import {validationMiddleware, validationUserToUserMiddleware} from "../middlewares/validationMiddleware";
+import {
+  addRegulars,
+  changeBoss,
+  createUser,
+  deleteUserById,
+  getAllUsers,
+  getUserById,
+  updateUser
+} from "../controllers/usersController";
 
 const router = express.Router();
 router
@@ -14,7 +22,11 @@ router
 
 router
   .route("/")
-  .post(authAdminMiddleware, validationMiddleware, createUser)
+  .post(authAdminMiddleware, validationMiddleware, createUser);
+
+router
+  .route("/add-regulars")
+  .post(authAdminMiddleware, validationUserToUserMiddleware, addRegulars);
 
 router
   .route("/:id")
@@ -24,7 +36,5 @@ router
 
 router
   .route("/change-boss")
-  .post(authBossMiddleware, () => {
-    console.log("change boss");
-  });
+  .post(authBossMiddleware, validationUserToUserMiddleware, changeBoss);
 export default router;

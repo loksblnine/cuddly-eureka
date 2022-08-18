@@ -18,7 +18,6 @@ export class UserToUser extends Model<IUserToUser, IUserInput> implements IUserT
   public bossId!: number;
   public regularId!: number;
 }
-
 UserToUser.init({
     bossId: {
       type: DataTypes.INTEGER,

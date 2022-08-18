@@ -12,7 +12,6 @@ export const authAdminMiddleware = (request: Request, response: Response, next: 
       return response.status(401).json({message: "Unauthorised"});
     }
     const decoded = jwt.verify(token, String(process.env.SECRET_KEY)) as JwtPayload;
-    console.log(11234, decoded);
     if (decoded?.role === 1) {
       request.body.user = decoded;
       next();

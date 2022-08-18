@@ -5,6 +5,8 @@
 import {NextFunction, Request, Response} from "express";
 import {IValidationError} from "../types";
 import {validateEmail} from "../utils";
+import {User, UserToUser} from "../database/models";
+import {Op} from "sequelize";
 
 export const validationMiddleware = (request: Request, response: Response, next: NextFunction): Response | undefined => {
   try {
@@ -43,4 +45,67 @@ export const validationMiddleware = (request: Request, response: Response, next:
   } catch (e) {
     return response.status(403).json({message: "Forbidden"});
   }
+};
+
+export const validationUserToUserMiddleware = async (request: Request, response: Response, next: NextFunction): Promise<any> => {
+  const regularId = Number(request.body.regularId) || -1;
+  const newBossId = Number(request.body.newBossId) || -1;
+  const bossId = Number(request.body.user.id) || -1;
+  if (regularId === bossId || bossId === newBossId || regularId === newBossId) {
+    return response.status(412).json(
+      "Check the provided info. Maybe you miss something."
+    );
+  }
+  const boss = await User.findOne({
+    where: {
+      role: {[Op.or]: [2, 3]},
+      id: bossId
+    },
+    raw: true,
+  });
+  if (!boss) {
+    return response.status(412).json(
+      "This is not boss user."
+    );
+  }
+  const regular = await User.findOne({
+    where: {
+      role: {[Op.or]: [2, 3]},
+      id: regularId
+    },
+    raw: true,
+  });
+  if (!regular) {
+    return response.status(412).json(
+      "This user can not obey."
+    );
+  }
+  if (newBossId > 0) {
+    const newBoss = await User.findOne({
+      where: {
+        role: 2,
+        id: newBossId
+      },
+      raw: true,
+    });
+    if (!newBoss) {
+      return response.status(412).json(
+        "This is not boss user."
+      );
+    }
+    const contact = await UserToUser.findOne({
+      attributes: ["bossId", "regularId"],
+      where: {
+        bossId,
+        regularId
+      },
+      raw: true,
+    });
+    if (!contact) {
+      return response.status(412).json(
+        "This is not ur regular user."
+      );
+    }
+  }
+  return next();
 };
