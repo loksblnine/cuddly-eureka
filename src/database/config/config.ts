@@ -1,4 +1,6 @@
 import {Sequelize} from "sequelize";
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env' });
 
 const dbDatabase = String(process.env.DB_DATABASE);
 const dbPassword = String(process.env.DB_PASSWORD);

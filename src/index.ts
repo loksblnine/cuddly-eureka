@@ -5,8 +5,7 @@
 import express from 'express';
 import cors from 'cors';
 import router from "./routes/router";
-import dotenv from 'dotenv';
-dotenv.config({ path: '.env' });
+
 import {sequelize} from "./database/config/config";
 
 const app: express.Express = express();
@@ -29,7 +28,7 @@ try {
 
 app.listen(process.env.PORT, () => {
   console.log(
-    `server listening on port: ${process.env.PORT} and env: ${process.env.NODE_ENV}`
+    `[index.ts] server listening on port: ${process.env.PORT} and env: ${process.env.NODE_ENV}`
   );
 });
 
