@@ -7,8 +7,15 @@ git clone https://github.com/loksblnine/cuddly-eureka.git
 ```sh
 npm install
 ```
-
-//тут добавить про докер и миграции с сидами//
+поднимаем наши контейнеры с бд и сервером 
+```sh
+docker compose up
+```
+накатываем миграции и сиды на докеровскую бд 
+```sh
+sequelize db:migrate --env docker
+sequelize db:seed:all --env docker
+```
 
 `http://localhost:5000/users/all` - возвращает пользователей для ролей. Роль определяется Bearer токеном приложенным в хедер авторизации, который можно 
 получить залогинившись по роуту `http://localhost:5000/auth/login`. 
