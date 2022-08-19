@@ -4,15 +4,15 @@ module.exports = {
   up: async (queryInterface) => {
     await queryInterface.bulkInsert('roles', [
       {
-        role_id: 1,
+        id: 1,
         description: "Admin"
       },
       {
-        role_id: 2,
+        id: 2,
         description: "Boss"
       },
       {
-        role_id: 3,
+        id: 3,
         description: "Regular"
       }
     ], {});

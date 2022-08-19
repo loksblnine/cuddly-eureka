@@ -1,6 +1,4 @@
 'use strict';
-import {User} from "../models";
-
 const {DataTypes} = require("sequelize");
 const {sequelize} = require("../config/config");
 
@@ -10,19 +8,11 @@ module.exports = {
       bossId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-          model: User,
-          key: 'id'
-        }
       },
       regularId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         unique: true,
-        references: {
-          model: User,
-          key: 'id'
-        }
       }
     },
       {

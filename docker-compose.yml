@@ -1,29 +1,27 @@
-version: "2"
+version: "3"
+
 services:
   server:
     environment:
       DB_USER: postgres
       DB_PASSWORD: nutter01
-      DB_HOST: localhost
+      DB_HOST: psql
       DB_PORT: 5432
       DB_DATABASE: cuddlyeureka
       PORT: 5000
       NODE_ENV: development
     restart: on-failure
-    build: .
+    command: npm run start
+    build:
+      context: .
     ports:
       - "5000:5000"
-    links:
-      - postgres
+    depends_on:
+      - psql
 
-  postgres:
+  psql:
+    container_name: "psql"
     image: postgres:13.5-alpine
-    healthcheck:
-      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres" ]
-      timeout: 45s
-      interval: 10s
-      retries: 10
-    restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: nutter01
